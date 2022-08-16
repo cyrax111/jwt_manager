@@ -8,17 +8,14 @@ import 'signifier.dart';
 
 class JwtBuilder {
   JwtBuilder({
-    required this.tokenDto,
     required Signifier signifier,
   }) : _signifier = signifier;
 
-  final TokenDto tokenDto;
-
   final Signifier _signifier;
 
-  String buildToken() {
+  String buildToken(TokenDto tokenDto) {
     try {
-      return _buildToken();
+      return _buildToken(tokenDto);
     } on JwtException {
       rethrow;
     } catch (e) {
@@ -26,7 +23,7 @@ class JwtBuilder {
     }
   }
 
-  String _buildToken() {
+  String _buildToken(TokenDto tokenDto) {
     final encodedHeader = _encode(tokenDto.buildHeader());
     final encodedClaims = _encode(tokenDto.buildClaims());
 

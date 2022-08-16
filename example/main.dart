@@ -17,9 +17,9 @@ void main() {
 
   final rsaSignifier = RsaSignifier(privateKey: rsaPrivateKey);
 
-  final jwtBuilder = JwtBuilder(tokenDto: tokenDto, signifier: rsaSignifier);
+  final jwtBuilder = JwtBuilder(signifier: rsaSignifier);
 
-  final jwtToken = jwtBuilder.buildToken();
+  final jwtToken = jwtBuilder.buildToken(tokenDto);
 
   print(jwtToken);
 }
