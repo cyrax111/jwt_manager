@@ -8,7 +8,7 @@
             "name": "jwt_manager",
             "request": "launch",
             "type": "dart",
-            "program": "example/jwt_manager_example.dart"
+            "program": "example/main.dart"
         }
     ]
 }
