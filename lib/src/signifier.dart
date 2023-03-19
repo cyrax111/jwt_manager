@@ -8,7 +8,7 @@ abstract class Signifier {
   String sign(String dataToSign);
 }
 
-class RsaSignifier implements Signifier {
+class RsaSignifier with SignatureTool implements Signifier {
   RsaSignifier({
     required this.privateKey,
   });
@@ -16,8 +16,10 @@ class RsaSignifier implements Signifier {
 
   @override
   String sign(String dataToSign) {
-    //final signer = Signer('SHA-256/RSA'); // Get using registry
-    final signer = RSASigner(SHA256Digest(), '0609608648016503040201');
+    final signer = RSASigner(
+      SHA256Digest(),
+      SignatureTool.digestIdentifierSHA256,
+    );
 
     // initialize with true, which means sign
     signer.init(true, PrivateKeyParameter<RSAPrivateKey>(privateKey));

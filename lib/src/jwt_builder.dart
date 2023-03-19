@@ -10,7 +10,7 @@ import 'signifier.dart';
 ///
 /// Builds and encodes to string JWT token using [Signifier] for making
 /// a signature.
-class JwtBuilder {
+class JwtBuilder with SignatureTool {
   JwtBuilder({
     required Signifier signifier,
   }) : _signifier = signifier;
