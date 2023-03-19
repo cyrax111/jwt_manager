@@ -8,10 +8,6 @@ abstract class KeyParser {
   PublicKey extractPublicKey(String pem);
 }
 
-class KeyParserException extends JwtException {
-  KeyParserException(super.message);
-}
-
 class RsaKeyParser implements KeyParser {
   @override
   PrivateKey extractPrivateKey(String pem) {
@@ -19,8 +15,9 @@ class RsaKeyParser implements KeyParser {
       return _extractPrivateKey(pem);
     } on KeyParserException {
       rethrow;
-    } catch (e) {
-      throw KeyParserException(e);
+    } catch (e, st) {
+      throw KeyParserException('extract private key exception',
+          details: e, stackTrace: st);
     }
   }
 
@@ -40,8 +37,9 @@ class RsaKeyParser implements KeyParser {
       return _extractPublicKey(pem);
     } on KeyParserException {
       rethrow;
-    } catch (e) {
-      throw KeyParserException(e);
+    } catch (e, st) {
+      throw KeyParserException('extract public key exception',
+          details: e, stackTrace: st);
     }
   }
 
@@ -60,4 +58,8 @@ class RsaKeyParser implements KeyParser {
     final pair = parser.parsePEM(pem);
     return pair;
   }
+}
+
+class KeyParserException extends JwtException {
+  KeyParserException(super.message, {super.details, super.stackTrace});
 }

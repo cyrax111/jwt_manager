@@ -24,8 +24,9 @@ class JwtBuilder {
       return _buildToken(tokenDto);
     } on JwtException {
       rethrow;
-    } catch (e) {
-      throw JwtBuilderException(e);
+    } catch (e, st) {
+      throw JwtBuilderException('buildToken exception',
+          details: e, stackTrace: st);
     }
   }
 
@@ -45,5 +46,5 @@ class JwtBuilder {
 }
 
 class JwtBuilderException extends JwtException {
-  JwtBuilderException(super.message);
+  JwtBuilderException(super.message, {super.details, super.stackTrace});
 }
