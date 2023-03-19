@@ -3,12 +3,17 @@ import 'package:rsa_pkcs/rsa_pkcs.dart' as rsa;
 
 import 'exception.dart';
 
+/// KeyParser interface
 abstract class KeyParser {
   PrivateKey extractPrivateKey(String pem);
   PublicKey extractPublicKey(String pem);
 }
 
+/// RsaKeyParser
+///
+/// Extracts private and public keys from PEM string
 class RsaKeyParser implements KeyParser {
+  /// Extracts private key from PEM string
   @override
   PrivateKey extractPrivateKey(String pem) {
     try {
@@ -31,6 +36,7 @@ class RsaKeyParser implements KeyParser {
         privateKey.prime1, privateKey.prime2);
   }
 
+  /// Extracts public key from PEM string
   @override
   PublicKey extractPublicKey(String pem) {
     try {
@@ -60,6 +66,7 @@ class RsaKeyParser implements KeyParser {
   }
 }
 
+/// Exception for KeyParser
 class KeyParserException extends JwtException {
   KeyParserException(super.message, {super.details, super.stackTrace});
 }
