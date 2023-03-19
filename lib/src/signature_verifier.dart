@@ -11,7 +11,7 @@ class RsaSignatureVerifier implements SignatureVerifier {
   RsaSignatureVerifier({
     required this.publicKey,
   });
-  final RSAPublicKey publicKey;
+  final PublicKey publicKey;
   @override
   bool verify(String signedData, String base64signature) {
     return _rsaVerify(publicKey, utf8.encode(signedData) as Uint8List,
@@ -19,7 +19,7 @@ class RsaSignatureVerifier implements SignatureVerifier {
   }
 
   bool _rsaVerify(
-      RSAPublicKey publicKey, Uint8List signedData, Uint8List signature) {
+      PublicKey publicKey, Uint8List signedData, Uint8List signature) {
     final sig = RSASignature(signature);
     final verifier = RSASigner(SHA256Digest(), '0609608648016503040201');
     verifier.init(false, PublicKeyParameter<RSAPublicKey>(publicKey));
