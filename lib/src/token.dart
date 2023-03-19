@@ -1,8 +1,10 @@
+/// Token interface
 abstract class TokenDto {
   Map<String, Object> buildHeader();
   Map<String, Object> buildClaims();
 }
 
+/// Firebase cloud messaging token
 class FcmTokenDto implements TokenDto {
   FcmTokenDto({
     DateTime? exp,
