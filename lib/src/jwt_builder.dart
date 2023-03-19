@@ -6,6 +6,10 @@ import 'package:jwt_manager/src/tools.dart';
 
 import 'signifier.dart';
 
+/// JwtBuilder
+///
+/// Builds and encodes to string JWT token using [Signifier] for making
+/// a signature.
 class JwtBuilder {
   JwtBuilder({
     required Signifier signifier,
@@ -13,6 +17,8 @@ class JwtBuilder {
 
   final Signifier _signifier;
 
+  /// Creates a string with format: "header.payload.signature" for JWT token.
+  /// Can throw [JwtException].
   String buildToken(TokenDto tokenDto) {
     try {
       return _buildToken(tokenDto);
