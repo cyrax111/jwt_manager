@@ -1,6 +1,6 @@
 name: jwt_manager
 description: An easy-to-use pure dart JWT manager that creates JWT tokens, verifies a signature, expiration time and others required key fields.
-version: 0.0.1
+version: 1.0.0
 
 environment:
   sdk: '>=2.17.6 <3.0.0'

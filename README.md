@@ -1,39 +1,52 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# JWT manager
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+An easy-to-use pure dart JWT manager that creates JWT tokens and verifies a signature.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### Creating an encoded JWT token
 
 ```dart
-const like = 'sample';
+// Creating a token
+final tokenDto = FcmTokenDto(
+iss: 'some@email.com',
+iat: DateTime(2001),
+);
+final pemPrivateKey = '-----BEGIN PRIVATE KEY-----...';
+
+// RsaKeyParser extracts private key from a pem string
+final parser = RsaKeyParser();
+final rsaPrivateKey = parser.extractPrivateKey(pemPrivateKey);
+
+// Create RsaSignifier for signing
+final rsaSignifier = RsaSignifier(privateKey: rsaPrivateKey);
+
+// JwtBuilder encodes the token to string and signs it
+final jwtBuilder = JwtBuilder(signifier: rsaSignifier);
+final jwtToken = jwtBuilder.buildToken(tokenDto);
+
+print('Encoded JWT: $jwtToken');
 ```
 
-## Additional information
+### Verifying a signature of jwt token
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+final pemPublicKey = '-----BEGIN PUBLIC KEY-----...'
+
+// Extract public key from a pem string
+final rsaPublicKey = parser.extractPublicKey(pemPublicKey);
+
+// Verifying the signature
+final rsaVerifier = RsaSignatureVerifier(publicKey: rsaPublicKey);
+final isVerified = rsaVerifier.verify('signedData', 'signature');
+
+print('Is signature verified: $isVerified');
+```
+
+### Extra example
+
+You can also use the full working [example](https://github.com/cyrax111/jwt_manager/tree/master/example) from github.
+
+## Ideas
+
+If you have any ideas on how to enhance this package or have any concern, feel free to make an [issue](https://github.com/cyrax111/jwt_manager/issues).
